@@ -37,13 +37,13 @@ app.get('/todos/:id', (req, res) => {
 
     if(!ObjectID.isValid(id))
     {
-        res.status(404).send();
+        return res.status(404).send();
     }
 
     Todo.findById(id).then((todo) => {
         if(!todo)
         {
-            res.status(404).send('Todo not found for given ID');
+            return res.status(404).send({text: 'Todo not found for given ID'});
         }
         res.send({todo});
     }).catch( (e) => res.status(404).send(e));
