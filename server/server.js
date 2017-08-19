@@ -5,9 +5,11 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const _ = require('lodash');
 
-const { mongoose } = require('./db/mongoose.js');
-const { Todo } = require('./models/todo.js');
-const { User } = require('./models/user.js');
+const { mongoose } = require('./db/mongoose');
+const { Todo } = require('./models/todo');
+const { User } = require('./models/user');
+const {authenticate} = require('./middleware/authenticate.js');
+
 const port = process.env.PORT;
 
 var app = express();
@@ -15,7 +17,6 @@ var app = express();
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
-    console.log(req.body.text);
     var todo = new Todo({
         text: req.body.text
     });
@@ -121,6 +122,10 @@ app.post('/users', (req, res) => {
     // .catch((e) => {
     //     res.status(400).send(e)
     // });
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 app.listen(port, () => {
