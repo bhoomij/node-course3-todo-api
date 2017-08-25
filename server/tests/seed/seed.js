@@ -31,7 +31,7 @@ var users = [{
     password: 'userOnePass',
     tokens: [{
         access: 'auth',
-        token: jwt.sign({_id: userOneID}, 'new123')
+        token: jwt.sign({_id: userOneID}, process.env.JWT_SECRET)
     }]
 },
 {
@@ -40,7 +40,7 @@ var users = [{
     password: 'userTwoPass',
     tokens: [{
         access: 'auth',
-        token: jwt.sign({_id: userTwoID}, 'new123')
+        token: jwt.sign({_id: userTwoID}, process.env.JWT_SECRET)
     }]
 }];
 
